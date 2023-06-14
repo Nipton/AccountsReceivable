@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="AccountsReceivable.View.CreatingСounterparty"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AccountsReceivable.View"
+             xmlns:m="clr-namespace:AccountsReceivable.Model"
+             mc:Ignorable="d" 
+             d:DesignWidth="720" Background="White" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0 0 15 0"/>
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="MinWidth" Value="250"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseTextBox}"/>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="Margin" Value="10 10 0 5"/>
+        </Style>
+        <Style x:Key="SaveButton" BasedOn="{ StaticResource PrimaryButtonStyle}" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsValid}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Setter Property="Opacity" Value="0.3"/>
+                    <Setter Property="Foreground" Value="SlateGray"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <m:Company/>
+    </UserControl.DataContext>
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20" Orientation="Vertical">
+                <StackPanel>
+                    <TextBlock x:Name="chapterTextBlock" FontWeight="Bold" FontSize="18" MinWidth="0" TextAlignment="Center">Контрагент</TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Наименование</TextBlock>
+                    <TextBox x:Name="name">
+                        <Binding Path="Name" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                    <TextBlock Style="{x:Null}" Foreground="#71547D" Text="*" Padding="6 0 0 0" FontWeight="Bold" FontSize="13" ToolTip="Обязательное поле для заполнения"></TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Краткое наименование</TextBlock>
+                    <TextBox x:Name="shortName">
+                        <Binding Path="ShortName" ValidatesOnExceptions="True">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="False"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox>
+                    <TextBlock Style="{x:Null}" Foreground="#71547D" Text="*" Padding="6 0 0 0" FontWeight="Bold" FontSize="13" ToolTip="Обязательное поле для заполнения"></TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Юридический адрес</TextBlock>
+                    <TextBox x:Name="legalAddress" Text="{Binding Path=LegalAddress}" ></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Фактический адрес</TextBlock>
+                    <TextBox x:Name="actualAddress" Text="{Binding Path=ActualAddress}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>ИНН</TextBlock>
+                    <TextBox x:Name="inn" Text="{Binding Path=Inn, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>КПП</TextBlock>
+                    <TextBox x:Name="kpp" Text="{Binding Path=Kpp, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>ОГРН</TextBlock>
+                    <TextBox x:Name="ogrn" Text="{Binding Path=Ogrn, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Банк</TextBlock>
+                    <TextBox x:Name="bank" Text="{Binding Path=Bank}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>р/с</TextBlock>
+                    <TextBox x:Name="rs" Text="{Binding Path=Rs, ValidatesOnDataErrors=True}">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>БИК</TextBlock>
+                    <TextBox x:Name="bik" Text="{Binding Path=Bik, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>к/с</TextBlock>
+                    <TextBox x:Name="ks" Text="{Binding Path=Ks, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Телефон</TextBlock>
+                    <TextBox x:Name="phone" Text="{Binding Path=Phone, ValidatesOnDataErrors=True}"></TextBox>
+                </StackPanel>
+                <StackPanel x:Name="stackPanel1">
+                    <TextBlock>Категория потребителей</TextBlock>
+                    <ComboBox Text="{Binding Category}" x:Name="category" Style="{StaticResource MainComboBox}" Width="330" BorderThickness="1.9" FontSize="14" IsEditable="True" Height="{Binding ActualHeight, ElementName=phone, Mode=OneWay}"/>
+                    <Button Style="{StaticResource OptionButton}" Margin="-1 0 0 0" x:Name="optionsButton" Click="OptionUnit_Click" Width="20" Height="{Binding ActualHeight, ElementName=category, Mode=OneWay}" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" FontSize="18" MinWidth="0" TextAlignment="Center">Руководитель</TextBlock>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>Должность</TextBlock>
+                    <TextBox x:Name="position" Text="{Binding Path=Position}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock>ФИО</TextBlock>
+                    <TextBox x:Name="fullName" Text="{Binding Path=DirectorFullName}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <Button Style="{StaticResource SaveButton}" Margin="400 25 15 0" HorizontalAlignment="Right" Content="Сохранить" Click="SaveButton"/>
+                    <Button Style="{StaticResource PrimaryButtonStyle}" Content="Отмена" VerticalAlignment="Bottom" Click="CancelButton_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel LostFocus="hiddenStackPanel_LostFocus" x:Name="hiddenStackPanel" Visibility="Collapsed"  HorizontalAlignment="Left" Orientation="Vertical" Margin="607,546,0,180">
+            <Border BorderBrush="#50026E" BorderThickness="1.8" Background="#996ca9" Height="55" Width="93">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.7" />
+                </Border.Effect>
+                <StackPanel Orientation="Vertical" Margin="0">
+                    <Button Style="{StaticResource UnitButton}" Content="Сохранить" Click="AddUnit_Click"/>
+                    <Button Style="{StaticResource UnitButton}" Content="Удалить" Click ="DeleteUnit_Click"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
